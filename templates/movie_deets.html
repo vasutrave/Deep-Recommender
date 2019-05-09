@@ -1,0 +1,105 @@
+<html>
+    <head>
+      
+        <link href='https://fonts.googleapis.com/css?family=Roboto:500,900,100,300,700,400' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='cards.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>   
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet"/>
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+    </head>
+</html>
+<body style="background-color:#383434">
+        <nav class="fill">
+                <ul>
+                  <li style="font-family: 'Luckiest Guy', cursive; font-size: 20px;" >What to watch?</li>
+                  <li><a href="{{ url_for('home')}}">Home</a></li>
+                  <li><a href="#">Movies</a></li>
+                  <li  style="float: right;">
+                        <a href="{{ url_for('login')}}">Sign Out</a>
+                    </li>
+                </ul>
+              </nav>
+            
+              <div class="movie-card">
+  
+                    <div class="container" style="padding:0px;height: 800px;">
+                      
+                      <a href="#"><img src="{{details[0].poster_path}}" style="height: 282px;width: 184px;"   alt="cover" class="cover" /></a>
+                          
+                      <div class="hero">
+                              
+                        <div class="details">
+                        
+                          <div class="title1">{{details[0].title}} <span>{{details[0].vote_average}}</span></div>
+                  
+                          <div class="title2">{{details[0].tagline}}</div>    
+                          
+                        <form action = "{{url_for('update_rating')}}"  method="POST">
+                          <fieldset class="rating">
+                              <input type="radio" id="star5" name="rating" value="5.0" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                              <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                              <input type="radio" id="star4" name="rating" value="4.0" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                              <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                              <input type="radio" id="star3" name="rating" value="3.0" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                              <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                              <input type="radio" id="star2" name="rating" value="2.0" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                              <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                              <input type="radio" id="star1" name="rating" value="1.0" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                              <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                          </fieldset>
+                          <button class="btn" style="background-color:rgb(228, 220, 220);" type="submit">Rate!</button>
+                        </form>
+                        </div> <!-- end details -->
+                        
+                      </div> <!-- end hero -->
+                      
+                      <div class="description">
+                        
+                        <div class="column1">
+                          {% for i in details[0].genres %}
+                          <span class="tag2">{{i}}</span>
+                          {% endfor %}
+                        </div> <!-- end column1 -->
+                        
+                        <div class="column2">
+                          
+                          <p>{{details[0].overview }}</p>
+                          
+                          
+                        </div> <!-- end column2 -->
+                        <div class="column2">
+                          <h3>Cast</h3>
+                          
+                              {% for j in details[0].cast %}
+                                <span>{{j}}&bull;</span>
+                              {% endfor %}
+                    
+                          <h3>Director</h3>
+                          <ul> 
+                              <li>{{details[0].director}}</li>
+                          </ul>
+                        
+                          </div>
+                      </div> <!-- end description -->
+                      
+                     
+                    </div> <!-- end container -->
+                  </div> <!-- end movie-card -->
+</body>

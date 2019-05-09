@@ -1,0 +1,211 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'style.css')}}" media="screen" />
+        <link href='https://fonts.googleapis.com/css?family=Roboto:500,900,100,300,700,400' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="{{ url_for('static',filename ='bootstrap-4.0.0-dist/js/bootstrap.min.js')}}"></script>   
+            <link href="{{ url_for('static',filename ='bootstrap-4.0.0-dist/css/bootstrap-theme.min.css')}}" rel="stylesheet"/>
+            <link href="{{ url_for('static',filename ='bootstrap-4.0.0-dist/css/bootstrap.min.css')}}" rel="stylesheet"/>
+    </head>
+    
+   
+
+
+
+
+    <body style="background: #0a1420; color: rgba(0, 0, 0, 0.5);">
+      <nav class="fill">
+        <ul>
+          <li style="font-family: 'Luckiest Guy', cursive; font-size: 20px;" >What to watch?</li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Movies</a></li>
+          <li  style="float: right;">
+                <li  style="float: right;">
+                        <a href="#">Sign Out</a>
+                    </li>
+            </li>
+        </ul>
+      </nav>
+  
+        <!--div class="row">
+            
+            <div class="col-lg-12">
+                <form action="#" method="get" id="searchForm" class="input-group">
+                                    
+                    <div class="input-group-btn search-panel">
+                        <select style="background-color: black; color: white;height:50px;"name="search_param" id="search_param" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <option value="all">Cast</option>
+                            <option value="username">Director</option>
+                            <option value="email">Genre</option>
+                            <option value="studentcode">Title</option>
+                        </select>
+                    </div>
+                    <label class="field a-field a-field_a1 page__field">
+                        <input class="field__input a-field__input" placeholder="e.g.Big Hero 6" required>
+                        <span class="a-field__label-wrap">
+                          <span class="a-field__label">Keyword for search</span>
+                        </span>
+                      </label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" style="height:50px;">
+                           <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </form>    
+            </div>
+ 
+        </div-->
+        <div class="row">
+            <div class="page__demo">
+
+
+            </div>
+          </div>
+        <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active"></li>
+              <li data-target="#demo" data-slide-to="1"></li>
+              <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+          
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{{url_for('static',filename='bp.jpg')}}" style="width:100%;" alt="Los Angeles">
+              </div>
+              <div class="carousel-item">
+                <img src="{{url_for('static',filename='sw.jpg')}}" style="width:100%;" alt="Chicago">
+              </div>
+              <div class="carousel-item">
+                <img src="{{url_for('static',filename='hg.jpg')}}" style="width:100%;" alt="New York">
+              </div>
+            </div>
+          
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </a>
+          
+          </div>
+            <!----Main grid with recommendations-->
+            <div class="row"><h3 style="font-family:'Montserrat', sans-serif;color: white; margin-left: 20px;">Watched Before</h3> </div>          
+            <div class="row">
+
+                {% for movies in watched_movies %}
+                
+                        <div class="col-lg-3">
+                        <div class="card">
+                        <div class="imgBx">
+                            <img src= {{movies.poster_path}} alt="{{movies.poster_path}}">
+                        </div>
+                        <div class="details">
+                            
+                            <h2><form action = "{{url_for('details',movieId = movies.id) }}" method="GET">
+                                    <button class = "btn" type="submit" style=" float: left;" name ="{{movies.id}}"><i class="material-icons"style="color: grey;">play_circle_filled</i></button></form>{{movies.title}} &nbsp; <i class="material-icons"style="color: grey; float: right;">star</i><span style="float:right;">{{movies.vote_average}}</span><br> 
+                  
+                                <span>
+                                    <ul class = "tags">
+                                    {% for i in movies.genres %}
+                                    <li class="tag">{{i}}</li>
+                                    {% endfor %}
+                                        </ul> 
+                                        
+                                </span>
+                        </div>
+                      </div>
+                </div>
+                {% endfor %}
+          
+
+                  
+            </div>
+            <br><br>
+            <div class="row"><h3 style="font-family:'Montserrat', sans-serif;color: white; margin-left: 20px;">Top Picks</h3> </div>          
+            
+                    <div class="row">
+                            {% for pop in predicted_movies %}
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="imgBx">
+                                        <img src="{{pop.poster_path}}" alt="images">
+                                    </div>
+                                    <div class="details">
+                                        <h2>
+                                            <form action = "{{url_for('details',movieId = pop.id) }}" method="GET">
+                                                <button class = "btn" type="submit" style=" float: left;" name ="{{pop.id}}"><i class="material-icons"style="color: grey;">play_circle_filled</i></button></form>
+                                            {{pop.title}} &nbsp; <i class="material-icons"style="color: grey; float: right;">star</i><span style="float:right;">{{pop.vote_average}}</span><br> 
+                              
+                                            <span>
+                                                <ul class = "tags">
+                                                    {% for i in pop.genres %}
+                                                    <li class="tag">{{i}}</li>
+                                                    {% endfor%}
+                                                     <li> </li>
+                                                    </ul> <br>
+                                            </span>
+                                 
+               
+                                         
+                                    </div>
+                                  </div>
+                            </div>
+                            {% endfor %}
+            
+                              
+                        
+
+                  
+            </div>
+
+            <div class="row"><h3 style="font-family:'Montserrat', sans-serif;color: white; margin-left: 20px;">Popular Movies</h3> </div>          
+            <div class="row">
+                {% for pop in popular_movies %}
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="imgBx">
+                            <img src="{{pop.poster_path}}" alt="images">
+                        </div>
+                        <div class="details">
+                            <h2>
+                                <form action = "{{url_for('details',movieId = pop.id) }}" method="GET">
+                                    <button class = "btn" type="submit" style=" float: left;" name ="{{pop.id}}"><i class="material-icons"style="color: grey;">play_circle_filled</i></button></form>
+                                {{pop.title}} &nbsp; <i class="material-icons"style="color: grey; float: right;">star</i><span style="float:right;">{{pop.vote_average}}</span><br> 
+                  
+                                <span>
+                                    <ul class = "tags">
+                                        {% for i in pop.genres %}
+                                        <li class="tag">{{i}}</li>
+                                        {% endfor%}
+                                         <li> </li>
+                                        </ul> <br>
+                                </span>
+                     
+   
+                             
+                        </div>
+                      </div>
+                </div>
+                {% endfor %}
+
+                  
+            </div>
+
+          <div>
+        
+
+          </div>
+
+   
+</body>
+</html>
